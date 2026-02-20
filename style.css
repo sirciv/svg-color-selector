@@ -153,7 +153,8 @@ input[type="text"].invalid {
   background: #fff5f5;
 }
 
-/* ── Reset button ── */
+/* ── Randomize / Reset buttons ── */
+#randomize-btn,
 #reset-btn {
   width: 100%;
   padding: 12px;
@@ -168,10 +169,19 @@ input[type="text"].invalid {
   transition: background .15s, transform .1s;
 }
 
+#randomize-btn {
+  background: #2d6a4f;
+}
+
+#randomize-btn:hover {
+  background: #3d8a6a;
+}
+
 #reset-btn:hover {
   background: #2a2a4e;
 }
 
+#randomize-btn:active,
 #reset-btn:active {
   transform: scale(.98);
 }

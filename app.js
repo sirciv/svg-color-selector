@@ -72,6 +72,23 @@ function resetColors() {
   });
 }
 
+/* ─── Randomize ──────────────────────────────────────────────── */
+function randomHex() {
+  return '#' + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0');
+}
+
+function randomizeColors() {
+  document.querySelectorAll('.color-row').forEach(row => {
+    const svgClass = row.getAttribute('data-class');
+    const key      = row.querySelector('label').getAttribute('for').replace('pick-', '');
+    const hex      = randomHex();
+    applyColor(svgClass, hex);
+    syncPicker(key, hex);
+    syncHex(key, hex);
+  });
+}
+
 /* ─── Init (SVG is already in the DOM — no fetch needed) ─────── */
 document.querySelectorAll('.color-row').forEach(wireRow);
+document.getElementById('randomize-btn').addEventListener('click', randomizeColors);
 document.getElementById('reset-btn').addEventListener('click', resetColors);
