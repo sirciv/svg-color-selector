@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logo Color Customizer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Logo Color Customizer</h1>
+  </header>
+
+  <main>
+    <!-- Left: SVG preview -->
+    <section class="preview-panel" aria-label="Logo preview">
+      <div class="svg-wrapper" id="svg-container"></div>
+    </section>
+
+    <!-- Right: Color controls -->
+    <section class="controls-panel" aria-label="Color controls">
+      <h2>Customize Colors</h2>
+
+      <div class="color-controls">
+        <div class="color-row" data-target="color-background">
+          <label for="pick-background">Background</label>
+          <div class="inputs">
+            <input type="color" id="pick-background" value="#1a1a2e">
+            <input type="text"  id="hex-background"  value="#1a1a2e" maxlength="7" spellcheck="false">
+          </div>
+        </div>
+
+        <div class="color-row" data-target="color-pennant">
+          <label for="pick-pennant">Pennant</label>
+          <div class="inputs">
+            <input type="color" id="pick-pennant" value="#e94560">
+            <input type="text"  id="hex-pennant"  value="#e94560" maxlength="7" spellcheck="false">
+          </div>
+        </div>
+
+        <div class="color-row" data-target="color-accent">
+          <label for="pick-accent">Accent</label>
+          <div class="inputs">
+            <input type="color" id="pick-accent" value="#f5a623">
+            <input type="text"  id="hex-accent"  value="#f5a623" maxlength="7" spellcheck="false">
+          </div>
+        </div>
+
+        <div class="color-row" data-target="color-text">
+          <label for="pick-text">Text</label>
+          <div class="inputs">
+            <input type="color" id="pick-text" value="#ffffff">
+            <input type="text"  id="hex-text"  value="#ffffff" maxlength="7" spellcheck="false">
+          </div>
+        </div>
+      </div>
+
+      <button id="reset-btn">Reset to Defaults</button>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

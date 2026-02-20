@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 260" width="500" height="260">
+  <!-- Background -->
+  <rect id="color-background" width="500" height="260" fill="#1a1a2e"/>
+
+  <!-- Pennant body: left rectangle + right triangle -->
+  <polygon id="color-pennant"
+    points="60,60 380,60 440,130 380,200 60,200"
+    fill="#e94560"/>
+
+  <!-- Accent: overlapping chevron at the tip -->
+  <polygon id="color-accent"
+    points="370,75 430,130 370,185 340,185 400,130 340,75"
+    fill="#f5a623"/>
+
+  <!-- Text -->
+  <text id="color-text"
+    x="210" y="143"
+    text-anchor="middle"
+    font-family="Arial Black, Arial, sans-serif"
+    font-size="52"
+    font-weight="900"
+    letter-spacing="4"
+    fill="#ffffff">LOGO</text>
+</svg>
