@@ -1,4 +1,4 @@
-/* ─── Defaults matching logo.svg class fills ─────────────────── */
+/* ─── Defaults matching the SVG's class fills ───────────────── */
 const DEFAULTS = {
   'cls-1': '#c65252',  // background rect
   'cls-4': '#2f4460',  // pennant body
@@ -6,52 +6,41 @@ const DEFAULTS = {
   'cls-3': '#fffefd',  // text
 };
 
-/* ─── Load SVG inline so its DOM is directly styleable ───────── */
-async function loadSVG() {
-  const res  = await fetch('logo.svg');
-  const text = await res.text();
-  document.getElementById('svg-container').innerHTML = text;
-}
-
 /* ─── Helpers ────────────────────────────────────────────────── */
 const isValidHex = str => /^#[0-9a-fA-F]{6}$/.test(str);
 
-// Set fill on every element that carries the given SVG CSS class.
-// Inline style.fill beats the class-level fill rule, so no !important needed.
+// Inline style.fill overrides the SVG class-level fill rule.
 function applyColor(svgClass, hex) {
-  document.querySelectorAll('#svg-container .' + svgClass)
-    .forEach(el => { el.style.fill = hex; });
+  document.querySelectorAll('.' + svgClass).forEach(el => {
+    el.style.fill = hex;
+  });
 }
 
 function syncPicker(key, hex) {
-  const el = document.getElementById('pick-' + key);
-  if (el) el.value = hex;
+  document.getElementById('pick-' + key).value = hex;
 }
 
 function syncHex(key, hex) {
   const el = document.getElementById('hex-' + key);
-  if (el) { el.value = hex; el.classList.remove('invalid'); }
+  el.value = hex;
+  el.classList.remove('invalid');
 }
 
 /* ─── Wire up a single color row ────────────────────────────── */
 function wireRow(row) {
-  const svgClass = row.dataset.class;                  // e.g. "cls-1"
-  const key      = row.querySelector('label').getAttribute('for')
-                       .replace('pick-', '');          // e.g. "background"
+  const svgClass = row.getAttribute('data-class');
+  const key      = row.querySelector('label').getAttribute('for').replace('pick-', '');
   const picker   = document.getElementById('pick-' + key);
-  const hexInput = document.getElementById('hex-'  + key);
+  const hexInput = document.getElementById('hex-' + key);
 
-  // Color picker → SVG + hex field
   picker.addEventListener('input', () => {
     applyColor(svgClass, picker.value);
     syncHex(key, picker.value);
   });
 
-  // Hex field → SVG + color picker
   hexInput.addEventListener('input', () => {
     let val = hexInput.value.trim();
     if (!val.startsWith('#')) val = '#' + val;
-
     if (isValidHex(val)) {
       hexInput.classList.remove('invalid');
       applyColor(svgClass, val);
@@ -61,7 +50,6 @@ function wireRow(row) {
     }
   });
 
-  // Normalise on blur
   hexInput.addEventListener('blur', () => {
     let val = hexInput.value.trim();
     if (val && !val.startsWith('#')) {
@@ -72,21 +60,18 @@ function wireRow(row) {
   });
 }
 
-/* ─── Reset button ──────────────────────────────────────────── */
+/* ─── Reset ─────────────────────────────────────────────────── */
 function resetColors() {
   document.querySelectorAll('.color-row').forEach(row => {
-    const svgClass = row.dataset.class;
+    const svgClass = row.getAttribute('data-class');
+    const key      = row.querySelector('label').getAttribute('for').replace('pick-', '');
     const hex      = DEFAULTS[svgClass];
-    const key      = row.querySelector('label').getAttribute('for')
-                         .replace('pick-', '');
     applyColor(svgClass, hex);
     syncPicker(key, hex);
     syncHex(key, hex);
   });
 }
 
-/* ─── Init ──────────────────────────────────────────────────── */
-loadSVG().then(() => {
-  document.querySelectorAll('.color-row').forEach(wireRow);
-  document.getElementById('reset-btn').addEventListener('click', resetColors);
-});
+/* ─── Init (SVG is already in the DOM — no fetch needed) ─────── */
+document.querySelectorAll('.color-row').forEach(wireRow);
+document.getElementById('reset-btn').addEventListener('click', resetColors);
